@@ -49,7 +49,7 @@ dist/
 .output/
 
 # ===== Claude Code =====
-.claude/settings.local.json
+.claude/
 
 # ===== 生成的分析输出 =====
 graphify-out/
