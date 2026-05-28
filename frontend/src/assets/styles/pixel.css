@@ -1,0 +1,612 @@
+/* ============================================================
+   PIXEL ARCADE DESIGN SYSTEM
+   NES-era retro game aesthetic
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+/* ============================================================
+   CSS VARIABLES
+   ============================================================ */
+:root {
+  /* Backgrounds */
+  --color-bg-dark: #0f0f23;
+  --color-bg-panel: #1a1a2e;
+  --color-bg-card: #16213e;
+  --color-bg-input: #0a0a1a;
+
+  /* Primary Colors */
+  --color-primary: #ff6b6b;      /* Mario red */
+  --color-secondary: #4ecdc4;    /* Cyan accent */
+  --color-gold: #ffd93d;         /* Coin gold */
+  --color-green: #6bcb77;        /* Health/success */
+  --color-purple: #9b59b6;       /* Mystery/power-up */
+  --color-orange: #ff9f43;       /* Warning/fire */
+
+  /* Text */
+  --color-white: #f0f0f0;
+  --color-text: #e0e0e0;
+  --color-text-dim: #8888aa;
+
+  /* Borders */
+  --color-border: #ffffff;
+  --color-border-dark: #333355;
+
+  /* Rankings */
+  --color-rank-gold: #ffd700;
+  --color-rank-silver: #c0c0c0;
+  --color-rank-bronze: #cd7f32;
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+
+  /* Transitions */
+  --transition-fast: 0.1s;
+  --transition-normal: 0.2s;
+}
+
+/* ============================================================
+   GLOBAL RESET & BASE
+   ============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Press Start 2P', monospace;
+  background: var(--color-bg-dark);
+  color: var(--color-text);
+  min-height: 100vh;
+  line-height: 1.8;
+  image-rendering: pixelated;
+  -webkit-font-smoothing: none;
+}
+
+/* ============================================================
+   PIXEL FONT UTILITY
+   ============================================================ */
+.pixel-font {
+  font-family: 'Press Start 2P', monospace !important;
+}
+
+.pixel-font-sm {
+  font-size: 10px;
+}
+
+.pixel-font-md {
+  font-size: 12px;
+}
+
+.pixel-font-lg {
+  font-size: 16px;
+}
+
+.pixel-font-xl {
+  font-size: 22px;
+}
+
+/* ============================================================
+   PIXEL BORDERS (layered box-shadow technique)
+   ============================================================ */
+.pixel-box {
+  background: var(--color-bg-panel);
+  box-shadow:
+    0 0 0 2px var(--color-bg-dark),
+    0 0 0 4px var(--color-border),
+    4px 4px 0 4px rgba(0,0,0,0.3);
+  border: none;
+}
+
+.pixel-box-inner {
+  background: var(--color-bg-panel);
+  box-shadow:
+    inset 0 0 0 2px var(--color-border-dark);
+  border: none;
+}
+
+/* ============================================================
+   PIXEL BUTTONS
+   ============================================================ */
+.pixel-btn {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 12px;
+  padding: 14px 28px;
+  background: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+  cursor: pointer;
+  text-transform: uppercase;
+  box-shadow:
+    0 0 0 2px var(--color-bg-dark),
+    0 0 0 4px var(--color-border),
+    4px 4px 0 4px rgba(0,0,0,0.4);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  position: relative;
+}
+
+.pixel-btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow:
+    0 0 0 2px var(--color-bg-dark),
+    0 0 0 4px var(--color-border),
+    6px 6px 0 4px rgba(0,0,0,0.4);
+}
+
+.pixel-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow:
+    0 0 0 2px var(--color-bg-dark),
+    0 0 0 4px var(--color-border),
+    2px 2px 0 4px rgba(0,0,0,0.4);
+}
+
+.pixel-btn--secondary {
+  background: var(--color-secondary);
+}
+
+.pixel-btn--gold {
+  background: var(--color-gold);
+  color: var(--color-bg-dark);
+}
+
+.pixel-btn--green {
+  background: var(--color-green);
+}
+
+.pixel-btn--danger {
+  background: var(--color-primary);
+}
+
+.pixel-btn--small {
+  font-size: 10px;
+  padding: 10px 20px;
+}
+
+/* ============================================================
+   CRT OVERLAY EFFECT
+   ============================================================ */
+.crt-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.05) 0px,
+    rgba(0, 0, 0, 0.05) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+}
+
+.crt-overlay::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 0%,
+    rgba(0, 0, 0, 0.2) 100%
+  );
+}
+
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.8; }
+}
+
+@keyframes spin-coin {
+  0% { transform: rotateY(0deg); }
+  100% { transform: rotateY(360deg); }
+}
+
+@keyframes glow {
+  0%, 100% {
+    text-shadow:
+      0 0 4px var(--color-gold),
+      0 0 8px var(--color-gold),
+      0 0 12px var(--color-gold);
+  }
+  50% {
+    text-shadow:
+      0 0 8px var(--color-gold),
+      0 0 16px var(--color-gold),
+      0 0 24px var(--color-gold);
+  }
+}
+
+@keyframes flash-row {
+  0% { background: var(--color-bg-panel); }
+  30% { background: rgba(255, 217, 61, 0.2); }
+  100% { background: var(--color-bg-panel); }
+}
+
+@keyframes bounce-in {
+  0% { transform: scale(0); opacity: 0; }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes slide-up {
+  0% { transform: translateY(20px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes star-twinkle {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+/* Animation utilities */
+.animate-blink {
+  animation: blink 1s infinite;
+}
+
+.animate-float {
+  animation: float 2s ease-in-out infinite;
+}
+
+.animate-pulse {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.animate-glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
+.animate-flash {
+  animation: flash-row 0.5s ease-out;
+}
+
+.animate-bounce-in {
+  animation: bounce-in 0.4s ease-out forwards;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.3s ease-out forwards;
+}
+
+/* ============================================================
+   PIXEL INPUT FIELDS
+   ============================================================ */
+.pixel-input {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 12px;
+  padding: 14px 18px;
+  background: var(--color-bg-input);
+  color: var(--color-secondary);
+  border: none;
+  box-shadow:
+    inset 0 0 0 2px var(--color-border-dark),
+    0 0 0 2px var(--color-bg-dark);
+  outline: none;
+  width: 100%;
+  transition: box-shadow var(--transition-normal);
+}
+
+.pixel-input::placeholder {
+  color: var(--color-text-dim);
+}
+
+.pixel-input:focus {
+  box-shadow:
+    inset 0 0 0 2px var(--color-secondary),
+    0 0 0 2px var(--color-bg-dark),
+    0 0 8px rgba(78, 205, 196, 0.3);
+}
+
+/* ============================================================
+   PIXEL CARD
+   ============================================================ */
+.pixel-card {
+  background: var(--color-bg-card);
+  box-shadow:
+    0 0 0 2px var(--color-bg-dark),
+    0 0 0 4px var(--color-border),
+    6px 6px 0 4px rgba(0,0,0,0.3);
+  padding: var(--space-lg);
+  position: relative;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.pixel-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow:
+    0 0 0 2px var(--color-bg-dark),
+    0 0 0 4px var(--color-secondary),
+    8px 8px 0 4px rgba(0,0,0,0.3);
+}
+
+.pixel-card__title {
+  font-size: 12px;
+  color: var(--color-gold);
+  margin-bottom: var(--space-md);
+  text-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+}
+
+.pixel-card__body {
+  font-size: 8px;
+  color: var(--color-text);
+  line-height: 2;
+}
+
+/* ============================================================
+   PIXEL BADGE (for ranks)
+   ============================================================ */
+.pixel-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  font-size: 10px;
+  font-family: 'Press Start 2P', monospace;
+  box-shadow:
+    0 0 0 2px var(--color-bg-dark),
+    0 0 0 4px currentColor;
+}
+
+.pixel-badge--gold {
+  color: var(--color-rank-gold);
+  background: rgba(255, 215, 0, 0.2);
+}
+
+.pixel-badge--silver {
+  color: var(--color-rank-silver);
+  background: rgba(192, 192, 192, 0.2);
+}
+
+.pixel-badge--bronze {
+  color: var(--color-rank-bronze);
+  background: rgba(205, 127, 50, 0.2);
+}
+
+/* ============================================================
+   PIXEL TABLE
+   ============================================================ */
+.pixel-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 4px;
+}
+
+.pixel-table th {
+  font-size: 8px;
+  color: var(--color-gold);
+  text-align: left;
+  padding: var(--space-sm) var(--space-md);
+  background: var(--color-bg-panel);
+  text-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+}
+
+.pixel-table td {
+  font-size: 8px;
+  padding: var(--space-md);
+  background: var(--color-bg-card);
+  color: var(--color-text);
+}
+
+.pixel-table tr:hover td {
+  background: rgba(78, 205, 196, 0.1);
+}
+
+/* ============================================================
+   NAVIGATION BUTTONS (header nav)
+   ============================================================ */
+.pixel-nav-btn {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  padding: 10px 18px;
+  background: transparent;
+  color: var(--color-text-dim);
+  border: none;
+  cursor: pointer;
+  transition: color var(--transition-fast), transform var(--transition-fast);
+}
+
+.pixel-nav-btn:hover {
+  color: var(--color-secondary);
+  transform: translateY(-2px);
+}
+
+/* ============================================================
+   BACKGROUND STARS (for login page)
+   ============================================================ */
+.stars-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background:
+    radial-gradient(2px 2px at 20px 30px, var(--color-white), transparent),
+    radial-gradient(2px 2px at 40px 70px, var(--color-gold), transparent),
+    radial-gradient(2px 2px at 50px 160px, var(--color-secondary), transparent),
+    radial-gradient(2px 2px at 90px 40px, var(--color-white), transparent),
+    radial-gradient(2px 2px at 130px 80px, var(--color-gold), transparent),
+    radial-gradient(2px 2px at 160px 120px, var(--color-secondary), transparent),
+    radial-gradient(1px 1px at 200px 50px, var(--color-white), transparent),
+    radial-gradient(2px 2px at 250px 100px, var(--color-gold), transparent),
+    radial-gradient(1px 1px at 300px 70px, var(--color-white), transparent),
+    radial-gradient(2px 2px at 350px 140px, var(--color-secondary), transparent),
+    radial-gradient(1px 1px at 400px 90px, var(--color-white), transparent),
+    radial-gradient(2px 2px at 450px 60px, var(--color-gold), transparent),
+    radial-gradient(1px 1px at 500px 130px, var(--color-white), transparent),
+    radial-gradient(2px 2px at 550px 40px, var(--color-secondary), transparent),
+    radial-gradient(1px 1px at 600px 110px, var(--color-white), transparent);
+  background-size: 650px 200px;
+  animation: star-twinkle 3s ease-in-out infinite alternate;
+}
+
+/* ============================================================
+   TERMINAL BLOCK (for Godot Config)
+   ============================================================ */
+.terminal-block {
+  background: #0a0a0a;
+  box-shadow:
+    inset 0 0 0 2px var(--color-border-dark),
+    0 0 20px rgba(78, 205, 196, 0.1);
+  padding: var(--space-lg);
+  position: relative;
+}
+
+.terminal-block::before {
+  content: '● ● ●';
+  position: absolute;
+  top: 8px;
+  left: 12px;
+  font-size: 8px;
+  color: var(--color-text-dim);
+  letter-spacing: 4px;
+}
+
+.terminal-block pre {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  color: #00ff00;
+  background: transparent;
+  margin: 0;
+  padding: var(--space-lg);
+  padding-top: calc(var(--space-lg) + 16px);
+  overflow-x: auto;
+  line-height: 2;
+  text-shadow: 0 0 4px rgba(0, 255, 0, 0.5);
+}
+
+/* ============================================================
+   COIN ICON
+   ============================================================ */
+.coin {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background: var(--color-gold);
+  border-radius: 50%;
+  box-shadow:
+    inset -2px -2px 0 rgba(0,0,0,0.3),
+    inset 2px 2px 0 rgba(255,255,255,0.3),
+    0 0 0 2px var(--color-bg-dark);
+  position: relative;
+}
+
+.coin::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  border: 2px solid rgba(0,0,0,0.2);
+  border-radius: 50%;
+}
+
+.coin--spinning {
+  animation: spin-coin 1s linear infinite;
+}
+
+/* ============================================================
+   HEART ICON
+   ============================================================ */
+.heart {
+  display: inline-block;
+  color: var(--color-primary);
+  font-size: 12px;
+}
+
+/* ============================================================
+   PULSING DOT (for online status)
+   ============================================================ */
+.pulse-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: var(--color-green);
+  border-radius: 50%;
+  animation: pulse 1s ease-in-out infinite;
+  box-shadow: 0 0 4px var(--color-green);
+}
+
+/* ============================================================
+   DECORATIVE BORDER CORNERS
+   ============================================================ */
+.corner-decoration {
+  position: relative;
+}
+
+.corner-decoration::before,
+.corner-decoration::after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--color-gold);
+}
+
+.corner-decoration::before {
+  top: -4px;
+  left: -4px;
+  border-right: none;
+  border-bottom: none;
+}
+
+.corner-decoration::after {
+  bottom: -4px;
+  right: -4px;
+  border-left: none;
+  border-top: none;
+}
+
+/* ============================================================
+   UTILITY CLASSES
+   ============================================================ */
+.text-gold { color: var(--color-gold); }
+.text-primary { color: var(--color-primary); }
+.text-secondary { color: var(--color-secondary); }
+.text-green { color: var(--color-green); }
+.text-dim { color: var(--color-text-dim); }
+
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+
+.mt-sm { margin-top: var(--space-sm); }
+.mt-md { margin-top: var(--space-md); }
+.mt-lg { margin-top: var(--space-lg); }
+.mb-sm { margin-bottom: var(--space-sm); }
+.mb-md { margin-bottom: var(--space-md); }
+.mb-lg { margin-bottom: var(--space-lg); }
+
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.gap-sm { gap: var(--space-sm); }
+.gap-md { gap: var(--space-md); }
+.gap-lg { gap: var(--space-lg); }

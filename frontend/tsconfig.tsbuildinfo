@@ -1,0 +1,1 @@
+{"root":["./src/main.ts","./src/vite-env.d.ts","./src/router/index.ts","./src/services/auth.ts","./src/services/websocket.ts","./src/stores/activegames.ts","./src/stores/leaderboard.ts","./src/app.vue","./src/views/activegamesview.vue","./src/views/godotconfigview.vue","./src/views/homeview.vue","./src/views/leaderboardview.vue","./src/views/loginview.vue"],"version":"5.9.3"}

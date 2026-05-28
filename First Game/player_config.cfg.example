@@ -1,0 +1,3 @@
+[player]
+player_id=<your-player-id>
+auth_token="<your-auth-token>"
