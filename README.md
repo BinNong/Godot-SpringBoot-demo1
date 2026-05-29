@@ -226,3 +226,7 @@ Godot 每 15 秒发送一次心跳到 `/api/game/heartbeat`。后端每 10 秒�
 - 场景重载必须延迟（0.5s timer）确保 `end_game` HTTP 请求在重载前发出
 - JWT 认证通过 `Authorization: Bearer <token>` Header 传递
 - `player_config.cfg` 包含 `player_id` 和 `auth_token`，是连接游戏和后端的凭证
+
+## 参考
+
+- [Brackeys - First Game in Godot](https://github.com/Brackeys/first-game-in-godot) — Godot 游戏部分基于此教程
