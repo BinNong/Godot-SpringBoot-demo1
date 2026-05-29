@@ -134,8 +134,8 @@ Godot-SpringBoot-demo1/
 
 确保以下服务已运行：
 
-- **PostgreSQL** at `nongbin.site:5432/first_game` (user: `fbdtp`)
-- **Redis** at `nongbin.site:6380` (user: `dog`)
+- **PostgreSQL** — 数据库服务器，详见 `application.properties.example`
+- **Redis** — 缓存/会话服务器，详见 `application.properties.example`
 
 或修改 `SpringBootBackend/src/main/resources/application.properties` 中的连接配置。
 
