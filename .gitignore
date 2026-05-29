@@ -50,6 +50,7 @@ dist/
 
 # ===== Claude Code =====
 .claude/
+CLAUDE.md
 
 # ===== 生成的分析输出 =====
 graphify-out/
